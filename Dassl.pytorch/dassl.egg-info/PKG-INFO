@@ -21,6 +21,7 @@ Requires-Dist: ftfy
 Requires-Dist: regex
 Requires-Dist: wilds==1.2.2
 Requires-Dist: tabulate
+Requires-Dist: pot
 
 # Dassl
 

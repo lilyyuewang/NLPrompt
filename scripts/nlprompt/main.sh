@@ -3,7 +3,7 @@
 #cd ../..
 
 # custom config
-DATA=/path/to/datasets
+DATA=~/datasets/nlprompt
 TRAINER=NLPrompt
 
 DATASET=$1

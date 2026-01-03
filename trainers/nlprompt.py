@@ -434,10 +434,10 @@ class NLPrompt(TrainerX):
                 print("before: len of confident samples",len(pred_idx))
 
 
-                count11=0
-                count12=0
-                count21=0
-                count22=0
+                count11=0 # clean true
+                count12=0 # clean false
+                count21=0 # noisy true
+                count22=0 # noisy false
                 for i in range(len(self.train_loader_x.dataset.data_source)):
                     if mask[i]== True:
                         if plabel[i] == gt_labels[i]:
@@ -471,7 +471,7 @@ class NLPrompt(TrainerX):
     def run_epoch(self):
         self.set_model_mode("train")
         losses_x = MetricMeter()  
-        losses_u = MetricMeter()  
+        # losses_u = MetricMeter()  # Commented out: MAE loss for noisy data removed  
         batch_time = AverageMeter()
         data_time = AverageMeter()
 
@@ -481,14 +481,15 @@ class NLPrompt(TrainerX):
         else:
             len_train_loader_x = 0
 
-        if self.train_loader_u is not None:
-            train_loader_u_iter = iter(self.train_loader_u)
-            len_train_loader_u = len(self.train_loader_u)
-        else:
-            len_train_loader_u = 0
+        # Commented out: MAE loss for noisy data removed
+        # if self.train_loader_u is not None:
+        #     train_loader_u_iter = iter(self.train_loader_u)
+        #     len_train_loader_u = len(self.train_loader_u)
+        # else:
+        #     len_train_loader_u = 0
 
         self.num_batches_x = len_train_loader_x
-        self.num_batches_u = len_train_loader_u
+        # self.num_batches_u = len_train_loader_u  # Commented out: MAE loss for noisy data removed
 
         end = time.time()
         
@@ -518,43 +519,46 @@ class NLPrompt(TrainerX):
                 ]
                 print(" ".join(info))
 
-            n_iter = self.epoch * (self.num_batches_x + self.num_batches_u) + self.batch_idx
+            # Updated n_iter calculation: only use num_batches_x (noisy data training removed)
+            n_iter = self.epoch * self.num_batches_x + self.batch_idx
+            # n_iter = self.epoch * (self.num_batches_x + self.num_batches_u) + self.batch_idx  # Original: included noisy batches
             for name, meter in losses_x.meters.items():
                 self.write_scalar("train_x/" + name, meter.avg, n_iter)
 
             end = time.time()
 
-        for self.batch_idx in range(self.num_batches_u):
-            try:
-                batch_u = next(train_loader_u_iter)
-                data_time.update(time.time() - end)
-                loss_summary_u = self.forward_backward_mae(batch_u)
-                losses_u.update(loss_summary_u)
-            except StopIteration:
-                break  # If the iterator is exhausted, exit the loop
+        # Commented out: MAE loss training loop for noisy data
+        # for self.batch_idx in range(self.num_batches_u):
+        #     try:
+        #         batch_u = next(train_loader_u_iter)
+        #         data_time.update(time.time() - end)
+        #         loss_summary_u = self.forward_backward_mae(batch_u)
+        #         losses_u.update(loss_summary_u)
+        #     except StopIteration:
+        #         break  # If the iterator is exhausted, exit the loop
 
-            batch_time.update(time.time() - end)
+        #     batch_time.update(time.time() - end)
 
-            if (self.batch_idx + 1) % self.cfg.TRAIN.PRINT_FREQ == 0 or self.num_batches_u < self.cfg.TRAIN.PRINT_FREQ:
-                eta_seconds = batch_time.avg * (self.num_batches_u - self.batch_idx - 1)
-                eta = str(datetime.timedelta(seconds=int(eta_seconds)))
+        #     if (self.batch_idx + 1) % self.cfg.TRAIN.PRINT_FREQ == 0 or self.num_batches_u < self.cfg.TRAIN.PRINT_FREQ:
+        #         eta_seconds = batch_time.avg * (self.num_batches_u - self.batch_idx - 1)
+        #         eta = str(datetime.timedelta(seconds=int(eta_seconds)))
 
-                info = [
-                    f"epoch [{self.epoch + 1}/{self.max_epoch}]",
-                    f"batch [{self.batch_idx + 1}/{self.num_batches_u}]",
-                    f"time {batch_time.val:.3f} ({batch_time.avg:.3f})",
-                    f"data {data_time.val:.3f} ({data_time.avg:.3f})",
-                    f"loss_u {losses_u}",
-                    f"lr {self.get_current_lr():.4e}",
-                    f"eta {eta}"
-                ]
-                print(" ".join(info))
+        #         info = [
+        #             f"epoch [{self.epoch + 1}/{self.max_epoch}]",
+        #             f"batch [{self.batch_idx + 1}/{self.num_batches_u}]",
+        #             f"time {batch_time.val:.3f} ({batch_time.avg:.3f})",
+        #             f"data {data_time.val:.3f} ({data_time.avg:.3f})",
+        #             f"loss_u {losses_u}",
+        #             f"lr {self.get_current_lr():.4e}",
+        #             f"eta {eta}"
+        #         ]
+        #         print(" ".join(info))
 
-            n_iter = self.epoch * (self.num_batches_x + self.num_batches_u) + self.batch_idx
-            for name, meter in losses_u.meters.items():
-                self.write_scalar("train_u/" + name, meter.avg, n_iter)
+        #     n_iter = self.epoch * (self.num_batches_x + self.num_batches_u) + self.batch_idx
+        #     for name, meter in losses_u.meters.items():
+        #         self.write_scalar("train_u/" + name, meter.avg, n_iter)
 
-            end = time.time()
+        #     end = time.time()
 
         self.update_lr()
 

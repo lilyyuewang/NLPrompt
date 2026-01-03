@@ -1,0 +1,4345 @@
+***************
+** Arguments **
+***************
+backbone: 
+config_file: configs/trainers/NLPrompt/rn50.yaml
+dataset_config_file: configs/datasets/eurosat.yaml
+eval_only: False
+head: 
+load_epoch: None
+model_dir: 
+no_train: False
+opts: ['DATASET.NUM_SHOTS', '16', 'DATASET.NOISE_RATE', '0.625', 'DATASET.NOISE_TYPE', 'sym', 'DATASET.num_class', '10']
+output_dir: output_wo_mae/eurosat/NLPrompt/rn50_16shots/noise_sym_0.625/seed1
+resume: 
+root: /home/convex/datasets/nlprompt
+seed: 1
+source_domains: None
+target_domains: None
+trainer: NLPrompt
+transforms: None
+************
+** Config **
+************
+DATALOADER:
+  K_TRANSFORMS: 1
+  NUM_WORKERS: 0
+  RETURN_IMG0: False
+  TEST:
+    BATCH_SIZE: 100
+    SAMPLER: SequentialSampler
+  TRAIN_U:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAME_AS_X: True
+    SAMPLER: RandomSampler
+  TRAIN_X:
+    BATCH_SIZE: 32
+    N_DOMAIN: 0
+    N_INS: 16
+    SAMPLER: RandomSampler
+DATASET:
+  ALL_AS_UNLABELED: False
+  BEGIN_RATE: 0.3
+  CIFAR_C_LEVEL: 1
+  CIFAR_C_TYPE: 
+  CURRICLUM_EPOCH: 0
+  CURRICLUM_MODE: linear
+  NAME: EuroSAT
+  NOISE_LABEL: True
+  NOISE_RATE: 0.625
+  NOISE_TYPE: sym
+  NUM_LABELED: -1
+  NUM_SHOTS: 16
+  PMODE: logP
+  REG_E: 0.01
+  REG_FEAT: 1.0
+  REG_LAB: 1.0
+  ROOT: /home/convex/datasets/nlprompt
+  SOURCE_DOMAINS: ()
+  STL10_FOLD: -1
+  SUBSAMPLE_CLASSES: all
+  TARGET_DOMAINS: ()
+  USE_OT: True
+  VAL_PERCENT: 0.1
+  num_class: 10
+INPUT:
+  COLORJITTER_B: 0.4
+  COLORJITTER_C: 0.4
+  COLORJITTER_H: 0.1
+  COLORJITTER_S: 0.4
+  CROP_PADDING: 4
+  CUTOUT_LEN: 16
+  CUTOUT_N: 1
+  GB_K: 21
+  GB_P: 0.5
+  GN_MEAN: 0.0
+  GN_STD: 0.15
+  INTERPOLATION: bicubic
+  NO_TRANSFORM: False
+  PIXEL_MEAN: [0.48145466, 0.4578275, 0.40821073]
+  PIXEL_STD: [0.26862954, 0.26130258, 0.27577711]
+  RANDAUGMENT_M: 10
+  RANDAUGMENT_N: 2
+  RGS_P: 0.2
+  RRCROP_SCALE: (0.08, 1.0)
+  SIZE: (224, 224)
+  TRANSFORMS: ('random_resized_crop', 'random_flip', 'normalize')
+MODEL:
+  BACKBONE:
+    NAME: RN50
+    PRETRAINED: True
+  HEAD:
+    ACTIVATION: relu
+    BN: True
+    DROPOUT: 0.0
+    HIDDEN_LAYERS: ()
+    NAME: 
+  INIT_WEIGHTS: 
+OPTIM:
+  ADAM_BETA1: 0.9
+  ADAM_BETA2: 0.999
+  BASE_LR_MULT: 0.1
+  GAMMA: 0.1
+  LR: 0.002
+  LR_SCHEDULER: cosine
+  MAX_EPOCH: 200
+  MOMENTUM: 0.9
+  NAME: sgd
+  NEW_LAYERS: ()
+  RMSPROP_ALPHA: 0.99
+  SGD_DAMPNING: 0
+  SGD_NESTEROV: False
+  STAGED_LR: False
+  STEPSIZE: (-1,)
+  WARMUP_CONS_LR: 1e-05
+  WARMUP_EPOCH: 1
+  WARMUP_MIN_LR: 1e-05
+  WARMUP_RECOUNT: True
+  WARMUP_TYPE: constant
+  WEIGHT_DECAY: 0.0005
+OUTPUT_DIR: output_wo_mae/eurosat/NLPrompt/rn50_16shots/noise_sym_0.625/seed1
+RESUME: 
+SEED: 1
+TEST:
+  COMPUTE_CMAT: False
+  EVALUATOR: Classification
+  FINAL_MODEL: last_step
+  NO_TEST: False
+  PER_CLASS_RESULT: False
+  SPLIT: test
+TRAIN:
+  CHECKPOINT_FREQ: 0
+  COUNT_ITER: train_x
+  PRINT_FREQ: 5
+TRAINER:
+  CDAC:
+    CLASS_LR_MULTI: 10
+    P_THRESH: 0.95
+    RAMPUP_COEF: 30
+    RAMPUP_ITRS: 1000
+    STRONG_TRANSFORMS: ()
+    TOPK_MATCH: 5
+  CROSSGRAD:
+    ALPHA_D: 0.5
+    ALPHA_F: 0.5
+    EPS_D: 1.0
+    EPS_F: 1.0
+  DAEL:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DAELDG:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 0.5
+  DDAIG:
+    ALPHA: 0.5
+    CLAMP: False
+    CLAMP_MAX: 1.0
+    CLAMP_MIN: -1.0
+    G_ARCH: 
+    LMDA: 0.3
+    WARMUP: 0
+  DOMAINMIX:
+    ALPHA: 1.0
+    BETA: 1.0
+    TYPE: crossdomain
+  ENTMIN:
+    LMDA: 0.001
+  FIXMATCH:
+    CONF_THRE: 0.95
+    STRONG_TRANSFORMS: ()
+    WEIGHT_U: 1.0
+  M3SDA:
+    LMDA: 0.5
+    N_STEP_F: 4
+  MCD:
+    N_STEP_F: 4
+  MEANTEACHER:
+    EMA_ALPHA: 0.999
+    RAMPUP: 5
+    WEIGHT_U: 1.0
+  MIXMATCH:
+    MIXUP_BETA: 0.75
+    RAMPUP: 20000
+    TEMP: 2.0
+    WEIGHT_U: 100.0
+  MME:
+    LMDA: 0.1
+  NAME: NLPrompt
+  NLPROMPT:
+    CLASS_TOKEN_POSITION: end
+    CSC: False
+    CTX_INIT: 
+    N_CTX: 16
+    PREC: fp16
+  SE:
+    CONF_THRE: 0.95
+    EMA_ALPHA: 0.999
+    RAMPUP: 300
+USE_CUDA: True
+VERBOSE: True
+VERSION: 1
+Collecting env info ...
+** System info **
+PyTorch version: 2.4.0
+Is debug build: False
+CUDA used to build PyTorch: 12.1
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 24.04.2 LTS (x86_64)
+GCC version: (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0
+Clang version: Could not collect
+CMake version: Could not collect
+Libc version: glibc-2.39
+
+Python version: 3.8.20 (default, Oct  3 2024, 15:24:27)  [GCC 11.2.0] (64-bit runtime)
+Python platform: Linux-6.14.0-29-generic-x86_64-with-glibc2.17
+Is CUDA available: True
+CUDA runtime version: Could not collect
+CUDA_MODULE_LOADING set to: LAZY
+GPU models and configuration: 
+GPU 0: NVIDIA A40
+GPU 1: NVIDIA A40
+GPU 2: NVIDIA A40
+GPU 3: NVIDIA A40
+
+Nvidia driver version: 575.64.03
+cuDNN version: Could not collect
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+Is XNNPACK available: True
+
+CPU:
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           46 bits physical, 57 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  64
+On-line CPU(s) list:                     0-63
+Vendor ID:                               GenuineIntel
+Model name:                              Intel(R) Xeon(R) Silver 4314 CPU @ 2.40GHz
+CPU family:                              6
+Model:                                   106
+Thread(s) per core:                      2
+Core(s) per socket:                      16
+Socket(s):                               2
+Stepping:                                6
+BogoMIPS:                                4800.00
+Flags:                                   fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 intel_ppin ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect wbnoinvd dtherm ida arat pln pts vnmi avx512vbmi umip pku ospke avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid fsrm md_clear pconfig flush_l1d arch_capabilities
+Virtualization:                          VT-x
+L1d cache:                               1.5 MiB (32 instances)
+L1i cache:                               1 MiB (32 instances)
+L2 cache:                                40 MiB (32 instances)
+L3 cache:                                48 MiB (2 instances)
+NUMA node(s):                            2
+NUMA node0 CPU(s):                       0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62
+NUMA node1 CPU(s):                       1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63
+Vulnerability Gather data sampling:      Vulnerable
+Vulnerability Ghostwrite:                Not affected
+Vulnerability Indirect target selection: Mitigation; Aligned branch/return thunks
+Vulnerability Itlb multihit:             Not affected
+Vulnerability L1tf:                      Not affected
+Vulnerability Mds:                       Not affected
+Vulnerability Meltdown:                  Not affected
+Vulnerability Mmio stale data:           Mitigation; Clear CPU buffers; SMT vulnerable
+Vulnerability Reg file data sampling:    Not affected
+Vulnerability Retbleed:                  Not affected
+Vulnerability Spec rstack overflow:      Not affected
+Vulnerability Spec store bypass:         Mitigation; Speculative Store Bypass disabled via prctl
+Vulnerability Spectre v1:                Mitigation; usercopy/swapgs barriers and __user pointer sanitization
+Vulnerability Spectre v2:                Mitigation; Enhanced / Automatic IBRS; IBPB conditional; PBRSB-eIBRS SW sequence; BHI SW loop, KVM SW loop
+Vulnerability Srbds:                     Not affected
+Vulnerability Tsx async abort:           Not affected
+
+Versions of relevant libraries:
+[pip3] flake8==3.7.9
+[pip3] numpy==1.24.3
+[pip3] torch==2.4.0
+[pip3] torchaudio==2.4.0
+[pip3] torchvision==0.19.0
+[pip3] triton==3.0.0
+[conda] blas                       1.0              mkl
+[conda] libjpeg-turbo              2.0.0            h9bf148f_0                   pytorch
+[conda] mkl                        2023.1.0         h213fc3f_46344
+[conda] mkl-service                2.4.0            py38h5eee18b_1
+[conda] mkl_fft                    1.3.8            py38h5eee18b_0
+[conda] mkl_random                 1.2.4            py38hdb19cb5_0
+[conda] numpy                      1.24.3           py38hf6e8229_1
+[conda] numpy-base                 1.24.3           py38h060ed82_1
+[conda] pytorch                    2.4.0            py3.8_cuda12.1_cudnn9.1.0_0  pytorch
+[conda] pytorch-cuda               12.1             ha16c6d3_6                   pytorch
+[conda] pytorch-mutex              1.0              cuda                         pytorch
+[conda] torchaudio                 2.4.0            py38_cu121                   pytorch
+[conda] torchtriton                3.0.0            py38                         pytorch
+[conda] torchvision                0.19.0           py38_cu121                   pytorch
+        Pillow (10.4.0)
+
+Loading trainer: NLPrompt
+Loading dataset: EuroSAT
+Reading split from /home/convex/datasets/nlprompt/eurosat/split_zhou_EuroSAT.json
+Loading preprocessed few-shot data from /home/convex/datasets/nlprompt/eurosat/split_fewshot/shot_16-seed_1.pkl
+Building transform_train
++ random resized crop (size=(224, 224), scale=(0.08, 1.0))
++ random flip
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+Building transform_test
++ resize the smaller edge to 224
++ 224x224 center crop
++ to torch tensor of range [0, 1]
++ normalization (mean=[0.48145466, 0.4578275, 0.40821073], std=[0.26862954, 0.26130258, 0.27577711])
+add noise 
+Data loader size: 5
+Data loader size: 1
+Data loader size: 81
+---------  -------
+Dataset    EuroSAT
+# classes  10
+# train_x  160
+# val      40
+# test     8,100
+---------  -------
+Loading CLIP (backbone: RN50)
+Building custom CLIP
+Initializing a generic context
+Initial context: "X X X X X X X X X X X X X X X X"
+Number of context words (tokens): 16
+Turning off gradients in both the image and the text encoder
+Loading evaluator: Classification
+No checkpoint found, train from scratch
+Initialize tensorboard (log_dir=output_wo_mae/eurosat/NLPrompt/rn50_16shots/noise_sym_0.625/seed1/tensorboard)
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:18
+noisy false:126
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:8
+clean false:7
+clean_rate:0.5333333333333333
+noisy true:17
+noisy false:128
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:9
+clean false:5
+clean_rate:0.6428571428571429
+noisy true:16
+noisy false:130
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:17
+noisy false:129
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:9
+clean false:12
+clean_rate:0.42857142857142855
+noisy true:14
+noisy false:125
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1562, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 25
+clean true:9
+clean false:16
+clean_rate:0.36
+noisy true:19
+noisy false:116
+after delete: len(clean_dataset) 25
+after delete: len(noisy_dataset) 135
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:10
+clean false:8
+clean_rate:0.5555555555555556
+noisy true:18
+noisy false:124
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:5
+clean false:10
+clean_rate:0.3333333333333333
+noisy true:13
+noisy false:132
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:4
+clean false:12
+clean_rate:0.25
+noisy true:14
+noisy false:130
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:6
+clean false:14
+clean_rate:0.3
+noisy true:19
+noisy false:121
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:6
+clean false:6
+clean_rate:0.5
+noisy true:11
+noisy false:137
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:9
+clean false:6
+clean_rate:0.6
+noisy true:17
+noisy false:128
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:5
+clean false:7
+clean_rate:0.4166666666666667
+noisy true:16
+noisy false:132
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:20
+noisy false:124
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1500, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 24
+clean true:13
+clean false:11
+clean_rate:0.5416666666666666
+noisy true:14
+noisy false:122
+after delete: len(clean_dataset) 24
+after delete: len(noisy_dataset) 136
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:10
+clean false:5
+clean_rate:0.6666666666666666
+noisy true:16
+noisy false:129
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:16
+noisy false:128
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:11
+clean false:11
+clean_rate:0.5
+noisy true:19
+noisy false:119
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:6
+clean false:7
+clean_rate:0.46153846153846156
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:7
+clean false:7
+clean_rate:0.5
+noisy true:13
+noisy false:133
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:9
+clean false:10
+clean_rate:0.47368421052631576
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:6
+clean false:12
+clean_rate:0.3333333333333333
+noisy true:15
+noisy false:127
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:8
+clean false:10
+clean_rate:0.4444444444444444
+noisy true:12
+noisy false:130
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 144
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:5
+clean false:10
+clean_rate:0.3333333333333333
+noisy true:11
+noisy false:134
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:6
+clean false:12
+clean_rate:0.3333333333333333
+noisy true:11
+noisy false:131
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1437, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 23
+clean true:11
+clean false:12
+clean_rate:0.4782608695652174
+noisy true:16
+noisy false:121
+after delete: len(clean_dataset) 23
+after delete: len(noisy_dataset) 137
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 144
+confident_label rate tensor(0.0625, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 10
+clean true:6
+clean false:4
+clean_rate:0.6
+noisy true:10
+noisy false:140
+after delete: len(clean_dataset) 10
+after delete: len(noisy_dataset) 150
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:7
+clean false:8
+clean_rate:0.4666666666666667
+noisy true:16
+noisy false:129
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:7
+clean false:11
+clean_rate:0.3888888888888889
+noisy true:16
+noisy false:126
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:7
+clean false:9
+clean_rate:0.4375
+noisy true:16
+noisy false:128
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:7
+clean false:6
+clean_rate:0.5384615384615384
+noisy true:18
+noisy false:129
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:19
+noisy false:124
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:11
+clean false:5
+clean_rate:0.6875
+noisy true:13
+noisy false:131
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:20
+noisy false:124
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1437, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 23
+clean true:9
+clean false:14
+clean_rate:0.391304347826087
+noisy true:18
+noisy false:119
+after delete: len(clean_dataset) 23
+after delete: len(noisy_dataset) 137
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:10
+clean false:7
+clean_rate:0.5882352941176471
+noisy true:16
+noisy false:127
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:15
+noisy false:131
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:7
+clean false:7
+clean_rate:0.5
+noisy true:10
+noisy false:136
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:14
+noisy false:132
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0625, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 10
+clean true:5
+clean false:5
+clean_rate:0.5
+noisy true:16
+noisy false:134
+after delete: len(clean_dataset) 10
+after delete: len(noisy_dataset) 150
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:8
+clean false:5
+clean_rate:0.6153846153846154
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:14
+noisy false:129
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:9
+clean false:10
+clean_rate:0.47368421052631576
+noisy true:20
+noisy false:121
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:10
+clean false:7
+clean_rate:0.5882352941176471
+noisy true:19
+noisy false:124
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:8
+clean false:12
+clean_rate:0.4
+noisy true:21
+noisy false:119
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:9
+clean false:11
+clean_rate:0.45
+noisy true:18
+noisy false:122
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:7
+clean false:8
+clean_rate:0.4666666666666667
+noisy true:14
+noisy false:131
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 141
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:8
+clean false:12
+clean_rate:0.4
+noisy true:11
+noisy false:129
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:9
+clean false:8
+clean_rate:0.5294117647058824
+noisy true:16
+noisy false:127
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:6
+clean false:12
+clean_rate:0.3333333333333333
+noisy true:14
+noisy false:128
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:7
+clean false:12
+clean_rate:0.3684210526315789
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 146
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:4
+clean false:14
+clean_rate:0.2222222222222222
+noisy true:10
+noisy false:132
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:7
+clean false:13
+clean_rate:0.35
+noisy true:11
+noisy false:129
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:5
+clean false:11
+clean_rate:0.3125
+noisy true:22
+noisy false:122
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1437, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 23
+clean true:10
+clean false:13
+clean_rate:0.43478260869565216
+noisy true:12
+noisy false:125
+after delete: len(clean_dataset) 23
+after delete: len(noisy_dataset) 137
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:10
+clean false:7
+clean_rate:0.5882352941176471
+noisy true:17
+noisy false:126
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:8
+clean false:14
+clean_rate:0.36363636363636365
+noisy true:12
+noisy false:126
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 128
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:10
+clean false:5
+clean_rate:0.6666666666666666
+noisy true:22
+noisy false:123
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:6
+clean false:6
+clean_rate:0.5
+noisy true:22
+noisy false:126
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1500, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 24
+clean true:10
+clean false:14
+clean_rate:0.4166666666666667
+noisy true:15
+noisy false:121
+after delete: len(clean_dataset) 24
+after delete: len(noisy_dataset) 136
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:6
+clean false:7
+clean_rate:0.46153846153846156
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:11
+clean false:7
+clean_rate:0.6111111111111112
+noisy true:15
+noisy false:127
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:8
+clean false:11
+clean_rate:0.42105263157894735
+noisy true:18
+noisy false:123
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:5
+clean false:7
+clean_rate:0.4166666666666667
+noisy true:19
+noisy false:129
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:9
+clean false:12
+clean_rate:0.42857142857142855
+noisy true:13
+noisy false:126
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:4
+clean false:9
+clean_rate:0.3076923076923077
+noisy true:18
+noisy false:129
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:11
+clean false:11
+clean_rate:0.5
+noisy true:15
+noisy false:123
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:11
+noisy false:130
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1500, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 24
+clean true:8
+clean false:16
+clean_rate:0.3333333333333333
+noisy true:15
+noisy false:121
+after delete: len(clean_dataset) 24
+after delete: len(noisy_dataset) 136
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:8
+clean false:10
+clean_rate:0.4444444444444444
+noisy true:19
+noisy false:123
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:8
+clean false:11
+clean_rate:0.42105263157894735
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:12
+clean false:9
+clean_rate:0.5714285714285714
+noisy true:14
+noisy false:125
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:9
+clean false:11
+clean_rate:0.45
+noisy true:12
+noisy false:128
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:9
+clean false:11
+clean_rate:0.45
+noisy true:12
+noisy false:128
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:5
+clean false:12
+clean_rate:0.29411764705882354
+noisy true:19
+noisy false:124
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:4
+clean false:8
+clean_rate:0.3333333333333333
+noisy true:16
+noisy false:132
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0688, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 11
+clean true:5
+clean false:6
+clean_rate:0.45454545454545453
+noisy true:21
+noisy false:128
+after delete: len(clean_dataset) 11
+after delete: len(noisy_dataset) 149
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:9
+clean false:8
+clean_rate:0.5294117647058824
+noisy true:17
+noisy false:126
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:8
+clean false:11
+clean_rate:0.42105263157894735
+noisy true:12
+noisy false:129
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:8
+clean false:7
+clean_rate:0.5333333333333333
+noisy true:19
+noisy false:126
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:6
+clean false:11
+clean_rate:0.35294117647058826
+noisy true:15
+noisy false:128
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:14
+noisy false:129
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 146
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:7
+clean false:10
+clean_rate:0.4117647058823529
+noisy true:7
+noisy false:136
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:7
+clean false:12
+clean_rate:0.3684210526315789
+noisy true:14
+noisy false:127
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 141
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:7
+clean false:10
+clean_rate:0.4117647058823529
+noisy true:12
+noisy false:131
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:5
+clean false:11
+clean_rate:0.3125
+noisy true:15
+noisy false:129
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:8
+clean false:5
+clean_rate:0.6153846153846154
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:8
+clean false:7
+clean_rate:0.5333333333333333
+noisy true:15
+noisy false:130
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:7
+clean false:5
+clean_rate:0.5833333333333334
+noisy true:16
+noisy false:132
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:11
+clean false:11
+clean_rate:0.5
+noisy true:12
+noisy false:126
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:8
+clean false:14
+clean_rate:0.36363636363636365
+noisy true:10
+noisy false:128
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 141
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:13
+noisy false:133
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:12
+clean false:9
+clean_rate:0.5714285714285714
+noisy true:18
+noisy false:121
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:10
+clean false:5
+clean_rate:0.6666666666666666
+noisy true:16
+noisy false:129
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 144
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:6
+clean false:6
+clean_rate:0.5
+noisy true:10
+noisy false:138
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:9
+clean false:10
+clean_rate:0.47368421052631576
+noisy true:11
+noisy false:130
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:10
+clean false:10
+clean_rate:0.5
+noisy true:13
+noisy false:127
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:11
+clean false:10
+clean_rate:0.5238095238095238
+noisy true:13
+noisy false:126
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:20
+noisy false:123
+all clean rate:  [0.5, 0.5333333333333333, 0.6428571428571429, 0.42857142857142855, 0.42857142857142855, 0.36, 0.5555555555555556, 0.3333333333333333, 0.25, 0.3, 0.5, 0.6, 0.4166666666666667, 0.5, 0.5416666666666666, 0.6666666666666666, 0.5, 0.3157894736842105, 0.5, 0.46153846153846156, 0.5, 0.47368421052631576, 0.3333333333333333, 0.4444444444444444, 0.3333333333333333, 0.3333333333333333, 0.4782608695652174, 0.6, 0.4666666666666667, 0.3888888888888889, 0.4375, 0.5384615384615384, 0.47058823529411764, 0.6875, 0.5, 0.391304347826087, 0.5882352941176471, 0.42857142857142855, 0.5, 0.42857142857142855, 0.5, 0.6153846153846154, 0.47058823529411764, 0.47368421052631576, 0.5882352941176471, 0.4, 0.45, 0.4666666666666667, 0.4, 0.5294117647058824, 0.3333333333333333, 0.3684210526315789, 0.2222222222222222, 0.35, 0.3125, 0.43478260869565216, 0.5882352941176471, 0.36363636363636365, 0.6666666666666666, 0.5, 0.4166666666666667, 0.46153846153846156, 0.6111111111111112, 0.42105263157894735, 0.4166666666666667, 0.42857142857142855, 0.3076923076923077, 0.5, 0.3157894736842105, 0.3333333333333333, 0.4444444444444444, 0.42105263157894735, 0.5714285714285714, 0.45, 0.45, 0.29411764705882354, 0.3333333333333333, 0.45454545454545453, 0.5294117647058824, 0.42105263157894735, 0.5333333333333333, 0.35294117647058826, 0.47058823529411764, 0.4117647058823529, 0.3684210526315789, 0.4117647058823529, 0.3125, 0.6153846153846154, 0.5333333333333333, 0.5833333333333334, 0.5, 0.36363636363636365, 0.42857142857142855, 0.5714285714285714, 0.6666666666666666, 0.5, 0.47368421052631576, 0.5, 0.5238095238095238, 0.47058823529411764]
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:3
+clean false:10
+clean_rate:0.23076923076923078
+noisy true:17
+noisy false:130
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:7
+clean false:10
+clean_rate:0.4117647058823529
+noisy true:14
+noisy false:129
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0688, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 11
+clean true:6
+clean false:5
+clean_rate:0.5454545454545454
+noisy true:17
+noisy false:132
+after delete: len(clean_dataset) 11
+after delete: len(noisy_dataset) 149
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:9
+clean false:8
+clean_rate:0.5294117647058824
+noisy true:20
+noisy false:123
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:17
+noisy false:124
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:7
+clean false:9
+clean_rate:0.4375
+noisy true:14
+noisy false:130
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:11
+clean false:4
+clean_rate:0.7333333333333333
+noisy true:17
+noisy false:128
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:6
+clean false:10
+clean_rate:0.375
+noisy true:11
+noisy false:133
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:7
+clean false:12
+clean_rate:0.3684210526315789
+noisy true:17
+noisy false:124
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 145
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:2
+clean false:12
+clean_rate:0.14285714285714285
+noisy true:13
+noisy false:133
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:4
+clean false:12
+clean_rate:0.25
+noisy true:16
+noisy false:128
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:7
+clean false:9
+clean_rate:0.4375
+noisy true:16
+noisy false:128
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:9
+clean false:6
+clean_rate:0.6
+noisy true:17
+noisy false:128
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:8
+clean false:12
+clean_rate:0.4
+noisy true:12
+noisy false:128
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:9
+clean false:10
+clean_rate:0.47368421052631576
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:8
+clean false:13
+clean_rate:0.38095238095238093
+noisy true:12
+noisy false:127
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 141
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:6
+clean false:10
+clean_rate:0.375
+noisy true:13
+noisy false:131
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:6
+clean false:15
+clean_rate:0.2857142857142857
+noisy true:16
+noisy false:123
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 146
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:5
+clean false:12
+clean_rate:0.29411764705882354
+noisy true:9
+noisy false:134
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.1437, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 23
+clean true:12
+clean false:11
+clean_rate:0.5217391304347826
+noisy true:18
+noisy false:119
+after delete: len(clean_dataset) 23
+after delete: len(noisy_dataset) 137
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:10
+clean false:5
+clean_rate:0.6666666666666666
+noisy true:18
+noisy false:127
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:5
+clean false:11
+clean_rate:0.3125
+noisy true:15
+noisy false:129
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:10
+clean false:10
+clean_rate:0.5
+noisy true:14
+noisy false:126
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:8
+clean false:5
+clean_rate:0.6153846153846154
+noisy true:18
+noisy false:129
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:8
+clean false:5
+clean_rate:0.6153846153846154
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:7
+clean false:7
+clean_rate:0.5
+noisy true:17
+noisy false:129
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:7
+clean false:10
+clean_rate:0.4117647058823529
+noisy true:15
+noisy false:128
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:8
+clean false:12
+clean_rate:0.4
+noisy true:20
+noisy false:120
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:3
+clean false:9
+clean_rate:0.25
+noisy true:15
+noisy false:133
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:11
+clean false:9
+clean_rate:0.55
+noisy true:15
+noisy false:125
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:14
+noisy false:127
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:9
+clean false:11
+clean_rate:0.45
+noisy true:11
+noisy false:129
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:11
+clean false:8
+clean_rate:0.5789473684210527
+noisy true:18
+noisy false:123
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:7
+clean false:5
+clean_rate:0.5833333333333334
+noisy true:17
+noisy false:131
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:6
+clean false:14
+clean_rate:0.3
+noisy true:16
+noisy false:124
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:12
+clean false:7
+clean_rate:0.631578947368421
+noisy true:18
+noisy false:123
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:7
+clean false:15
+clean_rate:0.3181818181818182
+noisy true:10
+noisy false:128
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:12
+clean false:8
+clean_rate:0.6
+noisy true:15
+noisy false:125
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:8
+clean false:10
+clean_rate:0.4444444444444444
+noisy true:17
+noisy false:125
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:12
+clean false:10
+clean_rate:0.5454545454545454
+noisy true:14
+noisy false:124
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:8
+clean false:5
+clean_rate:0.6153846153846154
+noisy true:22
+noisy false:125
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:12
+clean false:9
+clean_rate:0.5714285714285714
+noisy true:13
+noisy false:126
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:8
+clean false:7
+clean_rate:0.5333333333333333
+noisy true:17
+noisy false:128
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 141
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:9
+clean false:5
+clean_rate:0.6428571428571429
+noisy true:10
+noisy false:136
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:17
+noisy false:126
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:7
+clean false:6
+clean_rate:0.5384615384615384
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:7
+clean false:7
+clean_rate:0.5
+noisy true:18
+noisy false:128
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:20
+noisy false:126
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:6
+clean false:9
+clean_rate:0.4
+noisy true:15
+noisy false:130
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:9
+clean false:10
+clean_rate:0.47368421052631576
+noisy true:20
+noisy false:121
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 136
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:11
+clean false:7
+clean_rate:0.6111111111111112
+noisy true:13
+noisy false:129
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 131
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:11
+clean false:5
+clean_rate:0.6875
+noisy true:18
+noisy false:126
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:19
+noisy false:125
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:9
+clean false:12
+clean_rate:0.42857142857142855
+noisy true:14
+noisy false:125
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:7
+clean false:9
+clean_rate:0.4375
+noisy true:13
+noisy false:131
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:6
+clean false:9
+clean_rate:0.4
+noisy true:11
+noisy false:134
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0750, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 12
+clean true:8
+clean false:4
+clean_rate:0.6666666666666666
+noisy true:13
+noisy false:135
+after delete: len(clean_dataset) 12
+after delete: len(noisy_dataset) 148
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:5
+clean false:9
+clean_rate:0.35714285714285715
+noisy true:18
+noisy false:128
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 129
+confident_label rate tensor(0.1562, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 25
+clean true:14
+clean false:11
+clean_rate:0.56
+noisy true:17
+noisy false:118
+after delete: len(clean_dataset) 25
+after delete: len(noisy_dataset) 135
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:16
+noisy false:130
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 143
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:8
+clean false:6
+clean_rate:0.5714285714285714
+noisy true:9
+noisy false:137
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:18
+noisy false:125
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 130
+confident_label rate tensor(0.0688, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 11
+clean true:7
+clean false:4
+clean_rate:0.6363636363636364
+noisy true:23
+noisy false:126
+after delete: len(clean_dataset) 11
+after delete: len(noisy_dataset) 149
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.0875, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 14
+clean true:6
+clean false:8
+clean_rate:0.42857142857142855
+noisy true:17
+noisy false:129
+after delete: len(clean_dataset) 14
+after delete: len(noisy_dataset) 146
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:10
+clean false:12
+clean_rate:0.45454545454545453
+noisy true:15
+noisy false:123
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:8
+clean false:12
+clean_rate:0.4
+noisy true:17
+noisy false:123
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:10
+clean false:7
+clean_rate:0.5882352941176471
+noisy true:15
+noisy false:128
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:10
+clean false:10
+clean_rate:0.5
+noisy true:15
+noisy false:125
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:11
+clean false:7
+clean_rate:0.6111111111111112
+noisy true:9
+noisy false:133
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:8
+clean false:9
+clean_rate:0.47058823529411764
+noisy true:19
+noisy false:124
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:7
+clean false:8
+clean_rate:0.4666666666666667
+noisy true:19
+noisy false:126
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:6
+clean false:9
+clean_rate:0.4
+noisy true:14
+noisy false:131
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 128
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:9
+clean false:8
+clean_rate:0.5294117647058824
+noisy true:23
+noisy false:120
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:10
+clean false:12
+clean_rate:0.45454545454545453
+noisy true:18
+noisy false:120
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1437, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 23
+clean true:11
+clean false:12
+clean_rate:0.4782608695652174
+noisy true:15
+noisy false:122
+after delete: len(clean_dataset) 23
+after delete: len(noisy_dataset) 137
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 133
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:10
+clean false:11
+clean_rate:0.47619047619047616
+noisy true:17
+noisy false:122
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 144
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:7
+clean false:11
+clean_rate:0.3888888888888889
+noisy true:9
+noisy false:133
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 129
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:13
+clean false:6
+clean_rate:0.6842105263157895
+noisy true:18
+noisy false:123
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:8
+clean false:8
+clean_rate:0.5
+noisy true:15
+noisy false:129
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:10
+clean false:7
+clean_rate:0.5882352941176471
+noisy true:18
+noisy false:125
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:7
+clean false:11
+clean_rate:0.3888888888888889
+noisy true:19
+noisy false:123
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 125
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:13
+clean false:8
+clean_rate:0.6190476190476191
+noisy true:22
+noisy false:117
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 126
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:11
+clean false:8
+clean_rate:0.5789473684210527
+noisy true:23
+noisy false:118
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 142
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:6
+clean false:11
+clean_rate:0.35294117647058826
+noisy true:12
+noisy false:131
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:15
+noisy false:126
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:10
+clean false:11
+clean_rate:0.47619047619047616
+noisy true:15
+noisy false:124
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:5
+clean false:8
+clean_rate:0.38461538461538464
+noisy true:16
+noisy false:131
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1187, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 19
+clean true:6
+clean false:13
+clean_rate:0.3157894736842105
+noisy true:14
+noisy false:127
+after delete: len(clean_dataset) 19
+after delete: len(noisy_dataset) 141
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1250, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 20
+clean true:6
+clean false:14
+clean_rate:0.3
+noisy true:20
+noisy false:120
+after delete: len(clean_dataset) 20
+after delete: len(noisy_dataset) 140
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.0938, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 15
+clean true:7
+clean false:8
+clean_rate:0.4666666666666667
+noisy true:14
+noisy false:131
+after delete: len(clean_dataset) 15
+after delete: len(noisy_dataset) 145
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 135
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:9
+clean false:12
+clean_rate:0.42857142857142855
+noisy true:16
+noisy false:123
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.0813, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 13
+clean true:7
+clean false:6
+clean_rate:0.5384615384615384
+noisy true:15
+noisy false:132
+after delete: len(clean_dataset) 13
+after delete: len(noisy_dataset) 147
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 140
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:7
+clean false:14
+clean_rate:0.3333333333333333
+noisy true:13
+noisy false:126
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1500, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 24
+clean true:12
+clean false:12
+clean_rate:0.5
+noisy true:14
+noisy false:122
+after delete: len(clean_dataset) 24
+after delete: len(noisy_dataset) 136
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 138
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:10
+clean false:6
+clean_rate:0.625
+noisy true:12
+noisy false:132
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 139
+confident_label rate tensor(0.1125, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 18
+clean true:9
+clean false:9
+clean_rate:0.5
+noisy true:12
+noisy false:130
+after delete: len(clean_dataset) 18
+after delete: len(noisy_dataset) 142
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 134
+confident_label rate tensor(0.1313, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 21
+clean true:11
+clean false:10
+clean_rate:0.5238095238095238
+noisy true:15
+noisy false:124
+after delete: len(clean_dataset) 21
+after delete: len(noisy_dataset) 139
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1063, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 17
+clean true:9
+clean false:8
+clean_rate:0.5294117647058824
+noisy true:14
+noisy false:129
+after delete: len(clean_dataset) 17
+after delete: len(noisy_dataset) 143
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 137
+confident_label rate tensor(0.1000, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 16
+clean true:7
+clean false:9
+clean_rate:0.4375
+noisy true:16
+noisy false:128
+after delete: len(clean_dataset) 16
+after delete: len(noisy_dataset) 144
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+[OT_PL] Loading all features and outputs... Total samples: 160
+[OT_PL] Features shape: torch.Size([160, 1024]), Outputs shape: torch.Size([160, 10])
+[OT_PL] Starting Sinkhorn computation... P shape: torch.Size([160, 10]), budget: 1.0
+[Sinkhorn] Starting: a.shape=torch.Size([160]), b.shape=torch.Size([10]), P.shape=torch.Size([160, 10]), reg=0.01, numItermax=1000
+[Sinkhorn] Completed! coupling.shape=torch.Size([160, 10])
+[OT_PL] Sinkhorn computation completed!
+before epoch:data num: 160
+before epoch:different number: 132
+confident_label rate tensor(0.1375, device='cuda:0')
+before: len(self.train) 160
+before: len of confident samples 22
+clean true:10
+clean false:12
+clean_rate:0.45454545454545453
+noisy true:18
+noisy false:120
+after delete: len(clean_dataset) 22
+after delete: len(noisy_dataset) 138
+Checkpoint saved to output_wo_mae/eurosat/NLPrompt/rn50_16shots/noise_sym_0.625/seed1/prompt_learner/model.pth.tar-200
+after epoch: len(clean dataset) 160
+after epoch: len(noisy dataset) 160
+Finish training
+Deploy the last-epoch model
+Evaluate on the *test* set
+=> result
+* total: 8,100
+* correct: 1,297
+* accuracy: 16.0%
+* error: 84.0%
+* macro_f1: 9.7%
+Elapsed: 0:02:09

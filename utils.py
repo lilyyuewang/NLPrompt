@@ -46,7 +46,9 @@ def curriculum_structure_aware_PL(features, P, top_percent, L=None,
     top_percent = min(torch.sum(a).item(), top_percent)
     b = torch.ones((P.shape[1],), dtype=torch.float64).to(device) / P.shape[1] * top_percent
     P = P.double()
+    print(f"[Sinkhorn] Starting: a.shape={a.shape}, b.shape={b.shape}, P.shape={P.shape}, reg={reg_e}, numItermax=1000")
     coupling = ot.sinkhorn(a, b, M=-P, reg = reg_e, numItermax=1000, stopThr=1e-6,)
+    print(f"[Sinkhorn] Completed! coupling.shape={coupling.shape}")
     total = features.size(0)
 
     max_values, _ = torch.max(coupling, 1)
@@ -127,10 +129,12 @@ def OT_PL(model, eval_loader, num_class, batch_size, feat_dim=512, budget=1., su
         all_argmax_plabels[index] = argmax_plabels
 
     if load_all:
+        print(f"[OT_PL] Loading all features and outputs... Total samples: {len(feat_list) * batch_size if feat_list else 0}")
         feat = torch.cat(feat_list, dim=0)
         out = torch.cat(out_list, dim=0)
         index = torch.cat(idx_list, dim=0).cuda()
         labels = torch.cat(label_list, dim=0)
+        print(f"[OT_PL] Features shape: {feat.shape}, Outputs shape: {out.shape}")
         if sup_label is not None:
             L = torch.eye(num_class, dtype=torch.float64)[sup_label[index]].cuda()
         else:
@@ -142,12 +146,14 @@ def OT_PL(model, eval_loader, num_class, batch_size, feat_dim=512, budget=1., su
         if Pmode == 'softmax':
             P = F.softmax(out, dim=1)
 
+        print(f"[OT_PL] Starting Sinkhorn computation... P shape: {P.shape}, budget: {budget}")
         norm_feat = F.normalize(feat)
         couplings, selected_mask = curriculum_structure_aware_PL(norm_feat.detach(), P.detach(), top_percent=budget,
                                                                  L=L,
                                                                  reg_feat=reg_feat, reg_lab=reg_lab, version=version,
                                                                  reg_e=reg_e,
                                                                  reg_sparsity=reg_sparsity)
+        print(f"[OT_PL] Sinkhorn computation completed!")
         all_selected_mask[index] = selected_mask
         row_sum = torch.sum(couplings, 1).reshape((-1, 1))
         pseudo_labels = torch.div(couplings, row_sum)
