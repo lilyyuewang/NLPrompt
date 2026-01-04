@@ -185,9 +185,12 @@ def run_task(task: TaskConfig, data_root: str, gpu_id: int,
     return process
 
 
-def get_default_tasks() -> List[TaskConfig]:
+def get_default_tasks(trainer: str = "NLPrompt") -> List[TaskConfig]:
     """
     Define default tasks for parallel training
+    
+    Args:
+        trainer: Name of the trainer to use (e.g., "NLPrompt" or "nlprompt_wo_mae")
     
     Modify this function to customize your training tasks
     """
@@ -219,7 +222,8 @@ def get_default_tasks() -> List[TaskConfig]:
                     noise_rate=noise_rate,
                     noise_type=noise_type,
                         num_classes=num_classes,
-                    seed=1
+                    seed=1,
+                    trainer=trainer
                 ))
     
     return tasks
@@ -276,14 +280,20 @@ def main():
         default="output_wo_mae",
         help="Base output directory name (default: output_wo_mae)"
     )
+    parser.add_argument(
+        "--trainer",
+        type=str,
+        default="NLPrompt",
+        help="Name of trainer to use (e.g., 'NLPrompt' or 'nlprompt_wo_mae')"
+    )
     
     args = parser.parse_args()
     
     # Parse GPU IDs
     gpu_ids = [int(x.strip()) for x in args.gpus.split(',')]
     
-    # Get tasks
-    tasks = get_default_tasks()
+    # Get tasks with specified trainer
+    tasks = get_default_tasks(trainer=args.trainer)
     
     print("\n" + "="*80)
     print("NLPrompt Parallel Training")
@@ -291,6 +301,7 @@ def main():
     print(f"Data root: {args.data_root}")
     print(f"Available GPUs: {gpu_ids}")
     print(f"Number of tasks: {len(tasks)}")
+    print(f"Trainer: {args.trainer}")
     print(f"Output base: {args.output_base}")
     print(f"Log directory: {args.log_dir}")
     print(f"Skip existing: {args.skip_existing}")

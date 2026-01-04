@@ -245,7 +245,7 @@ class CustomCLIP(nn.Module):
         return logits
 
 
-@TRAINER_REGISTRY.register()
+@TRAINER_REGISTRY.register("nlprompt_wo_mae")
 class NLPrompt(TrainerX):
     def __init__(self, cfg):
         super().__init__(cfg)

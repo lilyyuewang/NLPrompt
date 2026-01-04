@@ -26,6 +26,7 @@ import datasets.imagenet_a
 import datasets.imagenet_r
 
 import trainers.nlprompt
+import trainers.nlprompt_wo_mae
 
 
 def print_args(args, cfg):
